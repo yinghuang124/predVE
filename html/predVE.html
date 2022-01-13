@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Prediction of Vaccine Efficacy in New Settings Based on...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for predVE {predVE}"><tr><td>predVE {predVE}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Prediction of Vaccine Efficacy in New Settings Based on Immunogenicity 
+</h2>
+
+<h3>Description</h3>
+
+<p>Predict average VE in the new setting based on CoR data in the current setting, based on infection status and immune response data
+in vaccine arm of the current efficacy trial (possibly with subsampling of immune response), disease prevalence in placebo recipients of the current efficacy trial,and immune response data in the new setting</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+predVE (dat.cor.vacc, prev.cur, S.new, weights.new=rep(1,length(S.new)))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>dat.cor.vacc</code></td>
+<td>
+
+<p>correlates data sampled from vaccine arm in the current efficiency trial, it needs to include the following variables: Y, binary indicator for disease or not; S, immune correlate value; weights, sampling weights for measuring S
+</p>
+</td></tr>
+<tr valign="top"><td><code>prev.cur</code></td>
+<td>
+
+<p>disease prevalence in placebo arm of the current setting
+</p>
+</td></tr>
+<tr valign="top"><td><code>S.new</code></td>
+<td>
+
+<p>immunogenicity for S in vaccine arm measured in the new setting (where VE prediction is of interest)
+</p>
+</td></tr>
+<tr valign="top"><td><code>weights.new</code></td>
+<td>
+
+<p>sampling weight for S.new in the new setting, default to 1 for random sample if not provided by user
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Function to predicted average VE in the new setting based on CoR data in the current setting, based on infection status and immune response data
+in vaccine arm of the current efficacy trial (possibly with subsampling of immune response), 
+disease prevalence in placebo recipients of the current efficacy trial, and immune response data in the new setting
+Assumptions: 
+1) risk of disease conditional on immune response follows a linear logistic model;
+2) placebo risk does not depend on vaccine-induced immune response;
+3) VE as a function of immune response is constant across settings
+</p>
+
+
+<h3>Value</h3>
+
+<p>Predicted average VE in the new setting
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+n&lt;-10000
+beta&lt;-c(-2,-0.8)
+set.seed(1)
+S&lt;-rnorm(n,2,1)
+R&lt;-1/(1+exp(-beta[1]-beta[2]*S))
+Y&lt;-rbinom(n,1,R)
+
+prev.cur&lt;-0.05
+
+### 
+prob.S&lt;-ifelse(Y==1,1,0.05)
+delta&lt;-rbinom(n,1,prob.S)
+
+dat.cor.vacc&lt;-data.frame(Y=Y[delta==1],S=S[delta==1],weights=1/prob.S[delta==1])
+S.new&lt;-rnorm(100,2.5,1)
+
+
+predVE(dat.cor.vacc=dat.cor.vacc,prev.cur=prev.cur,S.new=S.new)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>predVE</em> version 2022.01-12 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

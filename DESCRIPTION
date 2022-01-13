@@ -1,0 +1,15 @@
+Package: predVE
+LazyLoad: yes
+LazyData: yes
+Version: 2022.01-12
+Title: Prediction of Vaccine Efficacy in New Settings Based on
+        Immunogenicity
+Authors@R: c(person("Ying", "Huang", role = "cre", email = "yhuang124@gmail.com"))
+Depends: R (>= 4.0)
+Imports:
+Suggests:
+Description: Predict average VE in the new setting based on CoR data in the current setting, based on infection status and immune response data in vaccine arm of the current efficacy trial (possibly with subsampling of immune response), disease prevalence in placebo recipients of the current efficacy trial,and immune response data in the new setting
+License: GPL (>= 2)
+Author: Ying Huang [cre]
+Maintainer: Ying Huang <yhuang124@gmail.com>
+Built: R 4.1.2; ; 2022-01-13 05:43:10 UTC; windows
